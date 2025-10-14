@@ -1,0 +1,1341 @@
+{
+  "META_DOCUMENTATION": {
+    "feature_name": "uds-web-hosting",
+    "version": "1.0.0",
+    "status": "complete",
+    "generated_by": "Claude Code AI Assistant",
+    "generated_date": "2025-10-14",
+    "has_context": true,
+    "has_analysis": true,
+    "description": "Implementation plan for hosting UDS documentation library on Vercel"
+  },
+  "UNIVERSAL_PLANNING_STRUCTURE": {
+    "0_preparation": {
+      "section_name": "Preparation and Discovery",
+      "foundation_docs": {
+        "available": [
+          "README.md - Main project overview with structure and navigation",
+          "STRUCTURE.md - Detailed library organization",
+          "INDEX.md - Complete alphabetical index of all files"
+        ],
+        "missing": [
+          "ARCHITECTURE.md - Technical architecture documentation",
+          "API.md - API documentation (not applicable for static docs)",
+          "COMPONENTS.md - Component documentation"
+        ],
+        "impact": "Sufficient documentation exists for MVP deployment. Missing docs are not critical for static hosting."
+      },
+      "coding_standards": {
+        "available": [],
+        "missing": [
+          "No coding standards needed - this is a static documentation hosting project"
+        ],
+        "impact": "Not applicable for static site deployment"
+      },
+      "reference_components": {
+        "primary": null,
+        "secondary": [],
+        "note": "No existing code components. This is a greenfield static site deployment using Vercel and a markdown renderer framework."
+      },
+      "technology_stack": {
+        "current": {
+          "language": "Markdown",
+          "repository": "Git",
+          "structure": "6 categories, 16 subdirectories, 58 markdown files"
+        },
+        "proposed": {
+          "hosting": "Vercel",
+          "framework": "Next.js with next-mdx-remote or similar markdown renderer",
+          "deployment": "Auto-deploy from GitHub",
+          "styling": "Minimal CSS (MVP approach)"
+        }
+      },
+      "project_structure": {
+        "documentation_categories": [
+          "agent-instructions/ (5 files)",
+          "core-standards/ (25 files)",
+          "guides/ (12 files)",
+          "project-docs/ (8 files)",
+          "templates/ (2 files)",
+          "tools/ (1 file)"
+        ],
+        "key_files": [
+          "README.md - Entry point",
+          "INDEX.md - Complete file index",
+          "STRUCTURE.md - Organization guide"
+        ],
+        "internal_linking": "Multiple cross-references between markdown files using relative paths"
+      },
+      "discovery_notes": {
+        "file_count": "58 markdown files (context mentioned 49, actual count is 58)",
+        "directory_structure": "Well-organized with consistent naming conventions",
+        "link_patterns": "Relative links like [text](category/file.md)",
+        "mobile_issue": "GitHub mobile shows markdown files as empty - primary motivation for hosting solution"
+      }
+    },
+    "1_executive_summary": {
+      "section_name": "Executive Summary",
+      "feature_name": "UDS Web Hosting",
+      "one_sentence_summary": "Deploy the UDS documentation library (58 markdown files) to Vercel with auto-deployment to enable mobile-friendly viewing.",
+      "problem_statement": "The UDS documentation library contains 58 critical markdown files across 6 categories, but these files appear empty when viewed on GitHub mobile, making the documentation inaccessible to mobile users.",
+      "proposed_solution": "Create a minimal Next.js application that renders markdown files, deploy it to Vercel with auto-deployment configured, and ensure all internal links work correctly.",
+      "primary_benefits": [
+        "Mobile accessibility - All 58 markdown files viewable on mobile devices",
+        "Auto-deployment - Changes pushed to GitHub automatically deploy to Vercel",
+        "Working links - Internal markdown cross-references function correctly",
+        "Simple maintenance - Minimal codebase with no complex features to maintain",
+        "Fast access - Vercel CDN provides global fast loading"
+      ],
+      "scope": {
+        "in_scope": [
+          "Vercel hosting setup and configuration",
+          "Auto-deploy from GitHub repository",
+          "Markdown rendering for all 58 files",
+          "Internal link resolution between markdown files",
+          "Basic navigation (category browsing)",
+          "Mobile-responsive layout"
+        ],
+        "out_of_scope": [
+          "Search functionality",
+          "Sidebar navigation component",
+          "Dark mode toggle",
+          "Custom domain configuration",
+          "Private repository hosting",
+          "Advanced features (commenting, versioning UI)"
+        ]
+      },
+      "estimated_effort": "1-2 days for MVP implementation and deployment",
+      "complexity_level": "Low - Using well-established frameworks and hosting platform"
+    },
+    "2_risk_assessment": {
+      "section_name": "Risk Assessment and Mitigation",
+      "complexity_score": 2,
+      "complexity_justification": "Low complexity: Static site deployment using mature tools (Next.js, Vercel). Primary challenges are configuration and link resolution, not complex logic.",
+      "risks": [
+        {
+          "risk_id": "RISK-001",
+          "category": "technical",
+          "description": "Internal markdown links may break during conversion",
+          "likelihood": "medium",
+          "impact": "high",
+          "severity": "major",
+          "mitigation": [
+            "Test all internal links after deployment",
+            "Create a link map of all markdown cross-references",
+            "Use next-mdx-remote or similar that preserves relative links",
+            "Implement custom link transformer if needed"
+          ],
+          "contingency": "Manual link correction and redirect rules in vercel.json"
+        },
+        {
+          "risk_id": "RISK-002",
+          "category": "deployment",
+          "description": "Vercel build may fail due to large number of markdown files",
+          "likelihood": "low",
+          "impact": "medium",
+          "severity": "minor",
+          "mitigation": [
+            "Use static generation with getStaticPaths for all markdown routes",
+            "Configure Vercel build settings appropriately",
+            "Test build locally before deployment"
+          ],
+          "contingency": "Switch to incremental static regeneration (ISR) or client-side rendering for some routes"
+        },
+        {
+          "risk_id": "RISK-003",
+          "category": "functionality",
+          "description": "Some markdown files reference non-existent test files",
+          "likelihood": "high",
+          "impact": "low",
+          "severity": "minor",
+          "mitigation": [
+            "Context states this is acceptable",
+            "Ensure broken links don't crash the site",
+            "Display 404 page for missing files"
+          ],
+          "contingency": "Create placeholder pages for commonly referenced missing files"
+        },
+        {
+          "risk_id": "RISK-004",
+          "category": "ux",
+          "description": "Navigation may be unclear without sidebar",
+          "likelihood": "medium",
+          "impact": "medium",
+          "severity": "minor",
+          "mitigation": [
+            "Use INDEX.md and category README.md files as navigation",
+            "Create simple category listing page",
+            "Ensure README.md is prominent as entry point"
+          ],
+          "contingency": "Add breadcrumb navigation if users report confusion"
+        }
+      ],
+      "dependencies": [
+        {
+          "dependency_id": "DEP-001",
+          "type": "external",
+          "description": "GitHub repository must be accessible to Vercel",
+          "status": "available",
+          "risk": "low"
+        },
+        {
+          "dependency_id": "DEP-002",
+          "type": "external",
+          "description": "Vercel account and deployment permissions",
+          "status": "assumed_available",
+          "risk": "low"
+        },
+        {
+          "dependency_id": "DEP-003",
+          "type": "external",
+          "description": "Node.js and npm for local development",
+          "status": "assumed_available",
+          "risk": "low"
+        }
+      ],
+      "assumptions": [
+        "Repository is public (stated in constraints)",
+        "User has Vercel account or can create one (free tier sufficient)",
+        "GitHub Actions or Vercel's built-in deployment can be used",
+        "Markdown files follow standard syntax",
+        "No special authentication required for viewing docs"
+      ]
+    },
+    "3_current_state_analysis": {
+      "section_name": "Current State Analysis",
+      "existing_files": {
+        "documentation": [
+          "58 markdown files across 6 categories",
+          "README.md - Main entry point",
+          "INDEX.md - File index",
+          "STRUCTURE.md - Organization guide",
+          "Category README files for navigation"
+        ],
+        "configuration": [
+          ".git/ - Version control initialized",
+          "coderef/ - Working directory for planning"
+        ],
+        "web_application": []
+      },
+      "files_to_create": [
+        {
+          "file": "package.json",
+          "purpose": "Node.js project configuration with Next.js dependencies",
+          "priority": "high"
+        },
+        {
+          "file": "pages/_app.js",
+          "purpose": "Next.js application wrapper for global styles",
+          "priority": "high"
+        },
+        {
+          "file": "pages/index.js",
+          "purpose": "Home page rendering README.md",
+          "priority": "high"
+        },
+        {
+          "file": "pages/[...slug].js",
+          "purpose": "Dynamic route handler for all markdown files",
+          "priority": "high"
+        },
+        {
+          "file": "lib/markdown.js",
+          "purpose": "Markdown parsing and file loading utilities",
+          "priority": "high"
+        },
+        {
+          "file": "styles/globals.css",
+          "purpose": "Minimal CSS for readable documentation",
+          "priority": "medium"
+        },
+        {
+          "file": "vercel.json",
+          "purpose": "Vercel deployment configuration",
+          "priority": "high"
+        },
+        {
+          "file": ".gitignore",
+          "purpose": "Ignore node_modules and build artifacts",
+          "priority": "high"
+        },
+        {
+          "file": "next.config.js",
+          "purpose": "Next.js configuration for static export",
+          "priority": "high"
+        },
+        {
+          "file": "components/Layout.js",
+          "purpose": "Shared layout component with header/footer",
+          "priority": "medium"
+        },
+        {
+          "file": "public/favicon.ico",
+          "purpose": "Site favicon (optional)",
+          "priority": "low"
+        }
+      ],
+      "files_to_modify": [],
+      "files_to_delete": [],
+      "current_gaps": [
+        "No web application exists",
+        "No hosting configuration",
+        "No markdown rendering system",
+        "No deployment pipeline"
+      ],
+      "technical_debt": "None - greenfield project",
+      "compatibility_concerns": [
+        "Markdown links must be converted from .md to route paths",
+        "YAML frontmatter in some markdown files needs parsing",
+        "Windows file paths in development vs Unix in deployment"
+      ]
+    },
+    "4_key_features": {
+      "section_name": "Key Features and Requirements",
+      "features": [
+        {
+          "feature_id": "FEAT-001",
+          "name": "Vercel Hosting Setup",
+          "description": "Configure Vercel project with GitHub integration for automatic deployments",
+          "priority": "critical",
+          "requirements": [
+            "Connect GitHub repository to Vercel",
+            "Configure build command and output directory",
+            "Enable automatic deployments on git push",
+            "Verify successful initial deployment"
+          ],
+          "acceptance_criteria": [
+            "Vercel project created and linked to GitHub",
+            "Push to main branch triggers automatic deployment",
+            "Deployment completes successfully within 5 minutes",
+            "Site is accessible at vercel.app URL"
+          ]
+        },
+        {
+          "feature_id": "FEAT-002",
+          "name": "Markdown File Rendering",
+          "description": "Render all 58 markdown files with proper formatting and styling",
+          "priority": "critical",
+          "requirements": [
+            "Parse markdown files to HTML",
+            "Support YAML frontmatter extraction",
+            "Render code blocks with syntax highlighting",
+            "Format tables, lists, and headings correctly",
+            "Handle special markdown features used in UDS docs"
+          ],
+          "acceptance_criteria": [
+            "All 58 markdown files render without errors",
+            "Formatting matches markdown intent (headings, lists, tables)",
+            "Code blocks display with readable formatting",
+            "Content is readable on mobile devices"
+          ]
+        },
+        {
+          "feature_id": "FEAT-003",
+          "name": "Internal Link Resolution",
+          "description": "Convert markdown cross-references to working web links",
+          "priority": "critical",
+          "requirements": [
+            "Map markdown file paths to web routes",
+            "Convert [text](path/file.md) to working links",
+            "Handle relative and absolute markdown links",
+            "Support anchor links within documents",
+            "Gracefully handle links to non-existent files"
+          ],
+          "acceptance_criteria": [
+            "Links between markdown files navigate correctly",
+            "README.md quick start links work",
+            "Category README links function properly",
+            "Broken links show 404 page instead of crashing",
+            "At least 90% of internal links work correctly"
+          ]
+        },
+        {
+          "feature_id": "FEAT-004",
+          "name": "Category Browsing",
+          "description": "Enable browsing documentation by category structure",
+          "priority": "high",
+          "requirements": [
+            "List all 6 main categories on home page",
+            "Show files within each category",
+            "Preserve directory hierarchy in navigation",
+            "Display category README files"
+          ],
+          "acceptance_criteria": [
+            "Home page shows all 6 categories",
+            "Category pages list their markdown files",
+            "Subdirectories are navigable",
+            "File counts match actual structure"
+          ]
+        },
+        {
+          "feature_id": "FEAT-005",
+          "name": "Mobile Responsive Layout",
+          "description": "Ensure documentation is readable and navigable on mobile devices",
+          "priority": "high",
+          "requirements": [
+            "Responsive CSS that adapts to mobile screens",
+            "Readable font sizes on mobile",
+            "Touch-friendly navigation",
+            "No horizontal scrolling required",
+            "Fast loading on mobile networks"
+          ],
+          "acceptance_criteria": [
+            "Documentation readable on iPhone and Android",
+            "No horizontal scroll on mobile viewports",
+            "Links are easily tappable (44px touch target)",
+            "Pages load in under 3 seconds on 3G",
+            "Text is readable without zooming"
+          ]
+        },
+        {
+          "feature_id": "FEAT-006",
+          "name": "Auto-Deployment Pipeline",
+          "description": "Automatic deployment to Vercel when changes are pushed to GitHub",
+          "priority": "critical",
+          "requirements": [
+            "Vercel GitHub integration configured",
+            "Deployment triggers on push to main branch",
+            "Build and deployment status visible",
+            "Rollback capability if deployment fails"
+          ],
+          "acceptance_criteria": [
+            "Git push triggers automatic Vercel deployment",
+            "Deployment status visible in GitHub and Vercel",
+            "New content appears within 5 minutes of push",
+            "Failed deployments don't affect live site"
+          ]
+        }
+      ]
+    },
+    "5_task_id_system": {
+      "section_name": "Task Identification System",
+      "task_breakdown": [
+        {
+          "task_id": "TASK-001",
+          "feature_id": "FEAT-001",
+          "title": "Initialize Next.js project",
+          "description": "Create new Next.js project with necessary dependencies for markdown rendering",
+          "estimated_effort": "30 minutes",
+          "dependencies": [],
+          "acceptance_criteria": [
+            "package.json created with Next.js, React, and markdown dependencies",
+            "next.config.js configured for static export",
+            ".gitignore includes node_modules and .next"
+          ]
+        },
+        {
+          "task_id": "TASK-002",
+          "feature_id": "FEAT-002",
+          "title": "Create markdown parsing utilities",
+          "description": "Implement functions to read, parse, and convert markdown files",
+          "estimated_effort": "1 hour",
+          "dependencies": ["TASK-001"],
+          "acceptance_criteria": [
+            "lib/markdown.js exports getAllMarkdownFiles function",
+            "Function to get markdown content by file path",
+            "YAML frontmatter parsing supported",
+            "Markdown to HTML conversion working"
+          ]
+        },
+        {
+          "task_id": "TASK-003",
+          "feature_id": "FEAT-004",
+          "title": "Build home page with category navigation",
+          "description": "Create index page that displays 6 categories and links to documentation",
+          "estimated_effort": "1 hour",
+          "dependencies": ["TASK-002"],
+          "acceptance_criteria": [
+            "pages/index.js renders README.md content",
+            "6 categories displayed with file counts",
+            "Links to category pages functional",
+            "Mobile responsive layout"
+          ]
+        },
+        {
+          "task_id": "TASK-004",
+          "feature_id": "FEAT-002",
+          "title": "Implement dynamic markdown route handler",
+          "description": "Create [...slug].js to handle all markdown file routes dynamically",
+          "estimated_effort": "2 hours",
+          "dependencies": ["TASK-002"],
+          "acceptance_criteria": [
+            "pages/[...slug].js handles nested paths",
+            "getStaticPaths generates routes for all 58 markdown files",
+            "getStaticProps loads markdown content",
+            "Markdown renders to HTML correctly"
+          ]
+        },
+        {
+          "task_id": "TASK-005",
+          "feature_id": "FEAT-003",
+          "title": "Implement markdown link transformer",
+          "description": "Convert markdown file links to web route links",
+          "estimated_effort": "1.5 hours",
+          "dependencies": ["TASK-004"],
+          "acceptance_criteria": [
+            "Links with .md extension converted to route paths",
+            "Relative links resolve correctly",
+            "Anchor links within documents work",
+            "Broken links handled gracefully"
+          ]
+        },
+        {
+          "task_id": "TASK-006",
+          "feature_id": "FEAT-005",
+          "title": "Create minimal responsive CSS",
+          "description": "Write CSS for readable, mobile-friendly documentation display",
+          "estimated_effort": "1 hour",
+          "dependencies": ["TASK-001"],
+          "acceptance_criteria": [
+            "styles/globals.css with mobile-first design",
+            "Readable typography on all screen sizes",
+            "Code blocks styled with monospace font",
+            "Tables are scrollable on mobile if needed"
+          ]
+        },
+        {
+          "task_id": "TASK-007",
+          "feature_id": "FEAT-005",
+          "title": "Create Layout component",
+          "description": "Build shared layout with header and basic navigation",
+          "estimated_effort": "45 minutes",
+          "dependencies": ["TASK-006"],
+          "acceptance_criteria": [
+            "components/Layout.js wraps all pages",
+            "Header with site title and home link",
+            "Consistent spacing and max-width for content",
+            "Footer with basic info"
+          ]
+        },
+        {
+          "task_id": "TASK-008",
+          "feature_id": "FEAT-001",
+          "title": "Configure Vercel deployment settings",
+          "description": "Create vercel.json and configure build settings",
+          "estimated_effort": "30 minutes",
+          "dependencies": ["TASK-001"],
+          "acceptance_criteria": [
+            "vercel.json created with appropriate settings",
+            "Build command specified",
+            "Output directory configured",
+            "Environment variables set if needed"
+          ]
+        },
+        {
+          "task_id": "TASK-009",
+          "feature_id": "FEAT-006",
+          "title": "Connect repository to Vercel",
+          "description": "Link GitHub repository to Vercel and configure auto-deployment",
+          "estimated_effort": "30 minutes",
+          "dependencies": ["TASK-008"],
+          "acceptance_criteria": [
+            "Vercel project created",
+            "GitHub repository connected",
+            "Auto-deployment enabled for main branch",
+            "Initial deployment successful"
+          ]
+        },
+        {
+          "task_id": "TASK-010",
+          "feature_id": "FEAT-002",
+          "title": "Test all markdown file rendering",
+          "description": "Verify all 58 markdown files render correctly",
+          "estimated_effort": "1 hour",
+          "dependencies": ["TASK-004", "TASK-005", "TASK-007"],
+          "acceptance_criteria": [
+            "Manually check sample from each category",
+            "Verify complex formatting (tables, code blocks)",
+            "Confirm YAML frontmatter doesn't show",
+            "Check mobile rendering"
+          ]
+        },
+        {
+          "task_id": "TASK-011",
+          "feature_id": "FEAT-003",
+          "title": "Test internal link navigation",
+          "description": "Verify internal markdown links work correctly across all files",
+          "estimated_effort": "1 hour",
+          "dependencies": ["TASK-005", "TASK-010"],
+          "acceptance_criteria": [
+            "Test links in README.md quick start section",
+            "Verify category README links",
+            "Check cross-category links",
+            "Document any broken links (acceptable per constraints)"
+          ]
+        },
+        {
+          "task_id": "TASK-012",
+          "feature_id": "FEAT-006",
+          "title": "Verify auto-deployment workflow",
+          "description": "Test that git push triggers automatic deployment",
+          "estimated_effort": "30 minutes",
+          "dependencies": ["TASK-009"],
+          "acceptance_criteria": [
+            "Make test commit to main branch",
+            "Verify Vercel deployment triggered",
+            "Check deployment completes successfully",
+            "Confirm changes appear on live site"
+          ]
+        },
+        {
+          "task_id": "TASK-013",
+          "feature_id": "FEAT-005",
+          "title": "Mobile device testing",
+          "description": "Test documentation viewing on actual mobile devices",
+          "estimated_effort": "45 minutes",
+          "dependencies": ["TASK-009", "TASK-010"],
+          "acceptance_criteria": [
+            "Test on iPhone (Safari)",
+            "Test on Android (Chrome)",
+            "Verify all features work on mobile",
+            "Confirm original problem (empty files on mobile) is solved"
+          ]
+        }
+      ],
+      "task_summary": {
+        "total_tasks": 13,
+        "critical_path_tasks": [
+          "TASK-001",
+          "TASK-002",
+          "TASK-004",
+          "TASK-005",
+          "TASK-009"
+        ],
+        "estimated_total_effort": "12-14 hours"
+      }
+    },
+    "6_implementation_phases": {
+      "section_name": "Implementation Phases",
+      "phases": [
+        {
+          "phase_id": "PHASE-1",
+          "phase_name": "Project Setup and Foundation",
+          "description": "Initialize Next.js project and create core markdown utilities",
+          "duration_estimate": "2-3 hours",
+          "tasks": [
+            "TASK-001",
+            "TASK-002",
+            "TASK-006",
+            "TASK-008"
+          ],
+          "deliverables": [
+            "Next.js project initialized with dependencies",
+            "Markdown parsing utilities functional",
+            "Basic CSS styles created",
+            "Vercel configuration ready"
+          ],
+          "success_criteria": [
+            "npm run dev starts development server",
+            "Markdown files can be read and parsed",
+            "Build completes without errors"
+          ],
+          "blockers": [
+            "Node.js must be installed",
+            "npm dependencies must resolve correctly"
+          ]
+        },
+        {
+          "phase_id": "PHASE-2",
+          "phase_name": "Page Development and Rendering",
+          "description": "Build home page, dynamic routes, and layout components",
+          "duration_estimate": "4-5 hours",
+          "tasks": [
+            "TASK-003",
+            "TASK-004",
+            "TASK-005",
+            "TASK-007"
+          ],
+          "deliverables": [
+            "Home page with category navigation",
+            "Dynamic route handling for all markdown files",
+            "Working internal link resolution",
+            "Shared layout component"
+          ],
+          "success_criteria": [
+            "All 58 markdown files accessible via routes",
+            "Internal links navigate correctly",
+            "Layout consistent across pages",
+            "No build errors"
+          ],
+          "blockers": [
+            "PHASE-1 must be complete",
+            "Markdown parsing must work correctly"
+          ]
+        },
+        {
+          "phase_id": "PHASE-3",
+          "phase_name": "Deployment and Integration",
+          "description": "Deploy to Vercel and configure auto-deployment",
+          "duration_estimate": "1-2 hours",
+          "tasks": [
+            "TASK-009",
+            "TASK-012"
+          ],
+          "deliverables": [
+            "Vercel project created and configured",
+            "GitHub integration active",
+            "Auto-deployment working",
+            "Site accessible at public URL"
+          ],
+          "success_criteria": [
+            "Site deployed successfully to Vercel",
+            "Git push triggers automatic deployment",
+            "No deployment errors",
+            "Site loads in browser"
+          ],
+          "blockers": [
+            "PHASE-2 must be complete",
+            "Vercel account required",
+            "GitHub repository must be accessible"
+          ]
+        },
+        {
+          "phase_id": "PHASE-4",
+          "phase_name": "Testing and Validation",
+          "description": "Comprehensive testing of rendering, links, and mobile functionality",
+          "duration_estimate": "3-4 hours",
+          "tasks": [
+            "TASK-010",
+            "TASK-011",
+            "TASK-013"
+          ],
+          "deliverables": [
+            "All markdown files verified rendering",
+            "Internal links tested and documented",
+            "Mobile functionality confirmed",
+            "Issue list for any remaining problems"
+          ],
+          "success_criteria": [
+            "At least 90% of internal links work",
+            "All categories browsable",
+            "Mobile viewing works on iOS and Android",
+            "Original problem (mobile GitHub empty files) solved"
+          ],
+          "blockers": [
+            "PHASE-3 must be complete",
+            "Access to mobile devices for testing"
+          ]
+        }
+      ],
+      "phase_dependencies": "Sequential: PHASE-1 → PHASE-2 → PHASE-3 → PHASE-4",
+      "total_duration": "10-14 hours (1-2 days)"
+    },
+    "7_testing_strategy": {
+      "section_name": "Testing Strategy",
+      "testing_levels": [
+        {
+          "level": "unit",
+          "description": "Test individual utility functions and components",
+          "tests": [
+            {
+              "test_id": "UNIT-001",
+              "description": "Markdown parsing functions",
+              "scope": "lib/markdown.js",
+              "method": "Jest unit tests",
+              "criteria": [
+                "getAllMarkdownFiles returns 58 files",
+                "getMarkdownByPath returns correct content",
+                "YAML frontmatter parsed correctly",
+                "Markdown to HTML conversion works"
+              ]
+            },
+            {
+              "test_id": "UNIT-002",
+              "description": "Link transformation function",
+              "scope": "Link transformer utility",
+              "method": "Jest unit tests",
+              "criteria": [
+                "Converts .md links to route paths",
+                "Handles relative paths correctly",
+                "Preserves anchor links",
+                "Returns original for external links"
+              ]
+            },
+            {
+              "test_id": "UNIT-003",
+              "description": "Layout component rendering",
+              "scope": "components/Layout.js",
+              "method": "React Testing Library",
+              "criteria": [
+                "Header renders with correct title",
+                "Children content displays",
+                "Footer renders",
+                "Responsive CSS applies"
+              ]
+            }
+          ]
+        },
+        {
+          "level": "integration",
+          "description": "Test interaction between components and pages",
+          "tests": [
+            {
+              "test_id": "INT-001",
+              "description": "Home page integration",
+              "scope": "pages/index.js with markdown utilities",
+              "method": "Manual testing in development",
+              "criteria": [
+                "README.md content displays",
+                "6 categories listed",
+                "Links to categories work",
+                "Page loads without errors"
+              ]
+            },
+            {
+              "test_id": "INT-002",
+              "description": "Dynamic route rendering",
+              "scope": "pages/[...slug].js with markdown utilities",
+              "method": "Manual testing of multiple routes",
+              "criteria": [
+                "Routes generated for all 58 files",
+                "Content renders correctly",
+                "Navigation between pages works",
+                "404 page shows for invalid routes"
+              ]
+            },
+            {
+              "test_id": "INT-003",
+              "description": "Internal link navigation flow",
+              "scope": "Full site navigation",
+              "method": "Manual click-through testing",
+              "criteria": [
+                "Links in README.md work",
+                "Category README links functional",
+                "Cross-references between docs work",
+                "Back/forward browser navigation works"
+              ]
+            }
+          ]
+        },
+        {
+          "level": "e2e",
+          "description": "End-to-end user workflows",
+          "tests": [
+            {
+              "test_id": "E2E-001",
+              "description": "Complete documentation browsing workflow",
+              "scope": "Full site on deployed Vercel instance",
+              "method": "Manual testing",
+              "criteria": [
+                "Land on home page",
+                "Navigate to category",
+                "Open markdown file",
+                "Follow internal link",
+                "Return to home",
+                "All steps work smoothly"
+              ]
+            },
+            {
+              "test_id": "E2E-002",
+              "description": "Mobile documentation viewing",
+              "scope": "Full site on mobile devices",
+              "method": "Manual testing on iPhone and Android",
+              "criteria": [
+                "Site loads on mobile",
+                "Content readable without zooming",
+                "Links tappable",
+                "Navigation works",
+                "No horizontal scroll"
+              ]
+            },
+            {
+              "test_id": "E2E-003",
+              "description": "Auto-deployment workflow",
+              "scope": "GitHub to Vercel pipeline",
+              "method": "Make test commit and verify deployment",
+              "criteria": [
+                "Commit and push to main branch",
+                "Vercel deployment triggers",
+                "Build completes successfully",
+                "Changes appear on live site within 5 minutes"
+              ]
+            }
+          ]
+        },
+        {
+          "level": "acceptance",
+          "description": "Validation against original requirements",
+          "tests": [
+            {
+              "test_id": "ACC-001",
+              "description": "Mobile viewing requirement",
+              "scope": "Original problem: empty files on mobile GitHub",
+              "method": "Side-by-side comparison",
+              "criteria": [
+                "GitHub mobile shows empty markdown files (confirm problem exists)",
+                "Vercel site shows full content on mobile (confirm solution works)",
+                "All 58 files viewable on mobile"
+              ]
+            },
+            {
+              "test_id": "ACC-002",
+              "description": "Auto-deployment requirement",
+              "scope": "Requirement: auto-deploy on git push",
+              "method": "Test deployment pipeline",
+              "criteria": [
+                "Push markdown change to GitHub",
+                "Deployment triggers automatically",
+                "Change appears on site without manual intervention"
+              ]
+            },
+            {
+              "test_id": "ACC-003",
+              "description": "Internal links requirement",
+              "scope": "Requirement: internal markdown links must work",
+              "method": "Test representative sample of links",
+              "criteria": [
+                "Test 20+ internal links across categories",
+                "At least 90% work correctly",
+                "Broken links fail gracefully (404, not crash)"
+              ]
+            }
+          ]
+        }
+      ],
+      "testing_tools": [
+        "Jest - Unit testing for utilities",
+        "React Testing Library - Component testing",
+        "Chrome DevTools - Mobile responsiveness testing",
+        "Vercel deployment logs - Build and deployment verification",
+        "Manual testing - Primary method for MVP"
+      ],
+      "testing_schedule": {
+        "during_development": "Unit tests for utilities (PHASE-1, PHASE-2)",
+        "before_deployment": "Integration testing (end of PHASE-2)",
+        "after_deployment": "E2E and acceptance testing (PHASE-4)",
+        "ongoing": "Auto-deployment testing with each push"
+      }
+    },
+    "8_success_criteria": {
+      "section_name": "Success Criteria and Acceptance",
+      "primary_success_criteria": [
+        {
+          "criterion_id": "SUCCESS-001",
+          "description": "All 58 markdown files are viewable on mobile devices",
+          "measurement": "Manual verification on iPhone and Android",
+          "target": "100% of markdown files display content (not empty)",
+          "priority": "critical"
+        },
+        {
+          "criterion_id": "SUCCESS-002",
+          "description": "Auto-deployment works on git push",
+          "measurement": "Test push to main branch triggers deployment",
+          "target": "Deployment completes within 5 minutes of push",
+          "priority": "critical"
+        },
+        {
+          "criterion_id": "SUCCESS-003",
+          "description": "Internal markdown links work correctly",
+          "measurement": "Test representative sample of internal links",
+          "target": "At least 90% of internal links navigate correctly",
+          "priority": "critical"
+        },
+        {
+          "criterion_id": "SUCCESS-004",
+          "description": "Site is mobile-responsive",
+          "measurement": "Test on various mobile screen sizes",
+          "target": "No horizontal scroll, readable text, tappable links",
+          "priority": "high"
+        },
+        {
+          "criterion_id": "SUCCESS-005",
+          "description": "All 6 categories are browsable",
+          "measurement": "Navigate category structure on deployed site",
+          "target": "All categories and subdirectories accessible",
+          "priority": "high"
+        },
+        {
+          "criterion_id": "SUCCESS-006",
+          "description": "Site loads quickly",
+          "measurement": "Test page load times on mobile network",
+          "target": "Pages load in under 3 seconds on 3G",
+          "priority": "medium"
+        }
+      ],
+      "technical_acceptance": [
+        "Next.js build completes without errors",
+        "All 58 markdown routes generated successfully",
+        "No console errors on page load",
+        "Vercel deployment status shows 'Ready'",
+        "All dependencies resolve correctly"
+      ],
+      "user_acceptance": [
+        "Documentation readable on mobile devices (solves original problem)",
+        "Navigation is intuitive enough without sidebar",
+        "Links work as expected",
+        "Content formatting is preserved from markdown",
+        "Site is maintainable by non-developers (just push markdown changes)"
+      ],
+      "performance_targets": [
+        "Initial page load: < 2 seconds on desktop, < 3 seconds on mobile 3G",
+        "Navigation between pages: < 1 second",
+        "Build time: < 5 minutes",
+        "Deployment time: < 5 minutes from push to live"
+      ],
+      "launch_checklist": [
+        {
+          "item": "All 58 markdown files deployed and accessible",
+          "status": "required"
+        },
+        {
+          "item": "Auto-deployment configured and tested",
+          "status": "required"
+        },
+        {
+          "item": "Mobile viewing verified on iOS and Android",
+          "status": "required"
+        },
+        {
+          "item": "Internal links tested with 90%+ success rate",
+          "status": "required"
+        },
+        {
+          "item": "Category navigation functional",
+          "status": "required"
+        },
+        {
+          "item": "404 page for missing files",
+          "status": "nice-to-have"
+        },
+        {
+          "item": "Favicon added",
+          "status": "nice-to-have"
+        },
+        {
+          "item": "README.md updated with deployment URL",
+          "status": "nice-to-have"
+        }
+      ]
+    },
+    "9_implementation_checklist": {
+      "section_name": "Implementation Checklist",
+      "phase_checklists": [
+        {
+          "phase": "PHASE-1: Project Setup and Foundation",
+          "items": [
+            {
+              "item": "Create package.json with Next.js, React, gray-matter, remark, remark-html",
+              "task_ref": "TASK-001",
+              "estimated_time": "15 min"
+            },
+            {
+              "item": "Create next.config.js with static export configuration",
+              "task_ref": "TASK-001",
+              "estimated_time": "10 min"
+            },
+            {
+              "item": "Create .gitignore for node_modules, .next, out",
+              "task_ref": "TASK-001",
+              "estimated_time": "5 min"
+            },
+            {
+              "item": "Run npm install to install dependencies",
+              "task_ref": "TASK-001",
+              "estimated_time": "5 min"
+            },
+            {
+              "item": "Create lib/markdown.js with getAllMarkdownFiles function",
+              "task_ref": "TASK-002",
+              "estimated_time": "20 min"
+            },
+            {
+              "item": "Implement getMarkdownByPath function with frontmatter parsing",
+              "task_ref": "TASK-002",
+              "estimated_time": "20 min"
+            },
+            {
+              "item": "Add markdown to HTML conversion utility",
+              "task_ref": "TASK-002",
+              "estimated_time": "20 min"
+            },
+            {
+              "item": "Create styles/globals.css with mobile-first responsive styles",
+              "task_ref": "TASK-006",
+              "estimated_time": "30 min"
+            },
+            {
+              "item": "Style headings, paragraphs, code blocks, tables",
+              "task_ref": "TASK-006",
+              "estimated_time": "30 min"
+            },
+            {
+              "item": "Create vercel.json with build configuration",
+              "task_ref": "TASK-008",
+              "estimated_time": "15 min"
+            },
+            {
+              "item": "Test local development server (npm run dev)",
+              "task_ref": "TASK-001",
+              "estimated_time": "10 min"
+            },
+            {
+              "item": "Verify markdown utilities with test file",
+              "task_ref": "TASK-002",
+              "estimated_time": "15 min"
+            }
+          ],
+          "phase_completion_criteria": [
+            "npm run dev starts without errors",
+            "Markdown utilities return expected data",
+            "CSS styles load correctly"
+          ]
+        },
+        {
+          "phase": "PHASE-2: Page Development and Rendering",
+          "items": [
+            {
+              "item": "Create components/Layout.js with header and footer",
+              "task_ref": "TASK-007",
+              "estimated_time": "25 min"
+            },
+            {
+              "item": "Add home link and basic navigation to Layout",
+              "task_ref": "TASK-007",
+              "estimated_time": "20 min"
+            },
+            {
+              "item": "Create pages/_app.js importing global CSS and Layout",
+              "task_ref": "TASK-007",
+              "estimated_time": "10 min"
+            },
+            {
+              "item": "Create pages/index.js to render README.md",
+              "task_ref": "TASK-003",
+              "estimated_time": "30 min"
+            },
+            {
+              "item": "Add category listing to home page",
+              "task_ref": "TASK-003",
+              "estimated_time": "30 min"
+            },
+            {
+              "item": "Create pages/[...slug].js for dynamic routing",
+              "task_ref": "TASK-004",
+              "estimated_time": "40 min"
+            },
+            {
+              "item": "Implement getStaticPaths to generate all markdown routes",
+              "task_ref": "TASK-004",
+              "estimated_time": "40 min"
+            },
+            {
+              "item": "Implement getStaticProps to load markdown content",
+              "task_ref": "TASK-004",
+              "estimated_time": "40 min"
+            },
+            {
+              "item": "Create link transformer function for .md to route conversion",
+              "task_ref": "TASK-005",
+              "estimated_time": "40 min"
+            },
+            {
+              "item": "Integrate link transformer into markdown rendering",
+              "task_ref": "TASK-005",
+              "estimated_time": "30 min"
+            },
+            {
+              "item": "Test home page with category navigation",
+              "task_ref": "TASK-003",
+              "estimated_time": "15 min"
+            },
+            {
+              "item": "Test dynamic routes with multiple markdown files",
+              "task_ref": "TASK-004",
+              "estimated_time": "20 min"
+            },
+            {
+              "item": "Test internal link navigation between files",
+              "task_ref": "TASK-005",
+              "estimated_time": "20 min"
+            },
+            {
+              "item": "Run npm run build to verify static generation",
+              "task_ref": "TASK-004",
+              "estimated_time": "10 min"
+            }
+          ],
+          "phase_completion_criteria": [
+            "Home page displays with category links",
+            "All markdown files accessible via routes",
+            "Internal links navigate correctly",
+            "npm run build completes successfully"
+          ]
+        },
+        {
+          "phase": "PHASE-3: Deployment and Integration",
+          "items": [
+            {
+              "item": "Create Vercel account if needed",
+              "task_ref": "TASK-009",
+              "estimated_time": "10 min"
+            },
+            {
+              "item": "Import GitHub repository to Vercel",
+              "task_ref": "TASK-009",
+              "estimated_time": "10 min"
+            },
+            {
+              "item": "Configure build settings (build command, output directory)",
+              "task_ref": "TASK-009",
+              "estimated_time": "10 min"
+            },
+            {
+              "item": "Enable auto-deployment for main branch",
+              "task_ref": "TASK-009",
+              "estimated_time": "5 min"
+            },
+            {
+              "item": "Trigger initial deployment",
+              "task_ref": "TASK-009",
+              "estimated_time": "5 min (+ build time)"
+            },
+            {
+              "item": "Monitor deployment and check for errors",
+              "task_ref": "TASK-009",
+              "estimated_time": "15 min"
+            },
+            {
+              "item": "Verify site is accessible at Vercel URL",
+              "task_ref": "TASK-009",
+              "estimated_time": "5 min"
+            },
+            {
+              "item": "Make test commit to main branch",
+              "task_ref": "TASK-012",
+              "estimated_time": "5 min"
+            },
+            {
+              "item": "Verify auto-deployment triggers from git push",
+              "task_ref": "TASK-012",
+              "estimated_time": "10 min"
+            },
+            {
+              "item": "Confirm changes appear on live site",
+              "task_ref": "TASK-012",
+              "estimated_time": "10 min"
+            }
+          ],
+          "phase_completion_criteria": [
+            "Site deployed to Vercel successfully",
+            "Vercel URL accessible",
+            "Auto-deployment triggers on git push",
+            "No deployment errors"
+          ]
+        },
+        {
+          "phase": "PHASE-4: Testing and Validation",
+          "items": [
+            {
+              "item": "Test home page rendering and navigation",
+              "task_ref": "TASK-010",
+              "estimated_time": "10 min"
+            },
+            {
+              "item": "Sample test files from each of 6 categories",
+              "task_ref": "TASK-010",
+              "estimated_time": "20 min"
+            },
+            {
+              "item": "Verify complex markdown (tables, code blocks, lists)",
+              "task_ref": "TASK-010",
+              "estimated_time": "15 min"
+            },
+            {
+              "item": "Check YAML frontmatter is hidden",
+              "task_ref": "TASK-010",
+              "estimated_time": "10 min"
+            },
+            {
+              "item": "Test README.md quick start links",
+              "task_ref": "TASK-011",
+              "estimated_time": "15 min"
+            },
+            {
+              "item": "Test category README internal links",
+              "task_ref": "TASK-011",
+              "estimated_time": "15 min"
+            },
+            {
+              "item": "Test cross-category navigation links",
+              "task_ref": "TASK-011",
+              "estimated_time": "15 min"
+            },
+            {
+              "item": "Document broken links (acceptable per constraints)",
+              "task_ref": "TASK-011",
+              "estimated_time": "15 min"
+            },
+            {
+              "item": "Test on iPhone (Safari) - load site and browse",
+              "task_ref": "TASK-013",
+              "estimated_time": "15 min"
+            },
+            {
+              "item": "Test on Android (Chrome) - load site and browse",
+              "task_ref": "TASK-013",
+              "estimated_time": "15 min"
+            },
+            {
+              "item": "Verify no horizontal scroll on mobile",
+              "task_ref": "TASK-013",
+              "estimated_time": "5 min"
+            },
+            {
+              "item": "Verify text readable without zooming",
+              "task_ref": "TASK-013",
+              "estimated_time": "5 min"
+            },
+            {
+              "item": "Verify links are tappable (touch targets adequate)",
+              "task_ref": "TASK-013",
+              "estimated_time": "10 min"
+            },
+            {
+              "item": "Compare mobile GitHub view vs Vercel site",
+              "task_ref": "TASK-013",
+              "estimated_time": "10 min"
+            },
+            {
+              "item": "Create issue list for any problems found",
+              "task_ref": "TASK-010",
+              "estimated_time": "15 min"
+            }
+          ],
+          "phase_completion_criteria": [
+            "All categories verified browsable",
+            "90%+ of internal links working",
+            "Mobile viewing confirmed on iOS and Android",
+            "Original problem (empty mobile files) solved"
+          ]
+        }
+      ],
+      "pre_deployment_checklist": [
+        "All dependencies installed (npm install successful)",
+        "Development server runs without errors (npm run dev)",
+        "Build completes successfully (npm run build)",
+        "All markdown files have routes generated",
+        "Internal links tested on localhost",
+        "Mobile responsive CSS verified in browser dev tools",
+        "Vercel configuration file created",
+        "Git repository clean and committed"
+      ],
+      "post_deployment_checklist": [
+        "Vercel deployment status shows 'Ready'",
+        "Site loads at Vercel URL",
+        "All 58 markdown files accessible",
+        "Internal links work on deployed site",
+        "Mobile viewing tested on real devices",
+        "Auto-deployment tested with git push",
+        "Performance acceptable (< 3 sec page load)",
+        "README.md updated with deployment URL"
+      ],
+      "rollback_procedure": [
+        "If deployment fails: Check Vercel deployment logs for errors",
+        "If build fails: Verify next.config.js and package.json settings",
+        "If links broken: Review link transformer function and test locally",
+        "If mobile issues: Test responsive CSS in browser dev tools",
+        "Emergency rollback: Use Vercel's rollback to previous deployment feature"
+      ]
+    }
+  }
+}
