@@ -52,15 +52,25 @@ export async function getStaticProps() {
 
   // Transform markdown links to Next.js links
   const transformedContent = contentHtml.replace(
-    /href="([^"]+\.md)"/g,
+    /href="([^"]+)"/g,
     (match, link) => {
-      // Handle relative links
-      if (link.startsWith('http://') || link.startsWith('https://')) {
-        return match // Keep external links as-is
+      // Keep external links as-is
+      if (link.startsWith('http://') || link.startsWith('https://') || link.startsWith('#')) {
+        return match
       }
 
-      // Remove .md extension and create route
-      const route = '/' + link.replace(/\.md$/, '').replace(/\\/g, '/')
+      // Transform internal links
+      let route = link
+      // Remove .md extension if present
+      route = route.replace(/\.md$/, '')
+      // Remove trailing slash and add /README for directory links
+      if (route.endsWith('/')) {
+        route = route.slice(0, -1) + '/README'
+      }
+      // Ensure leading slash
+      if (!route.startsWith('/')) {
+        route = '/' + route
+      }
       return `href="${route}"`
     }
   )
