@@ -50,12 +50,27 @@ export default function Home({ content, frontmatter }) {
 export async function getStaticProps() {
   const { contentHtml, frontmatter } = await getMarkdownByPath('README.md')
 
+  // Transform markdown links to Next.js links
+  const transformedContent = contentHtml.replace(
+    /href="([^"]+\.md)"/g,
+    (match, link) => {
+      // Handle relative links
+      if (link.startsWith('http://') || link.startsWith('https://')) {
+        return match // Keep external links as-is
+      }
+
+      // Remove .md extension and create route
+      const route = '/' + link.replace(/\.md$/, '').replace(/\\/g, '/')
+      return `href="${route}"`
+    }
+  )
+
   // Serialize frontmatter to handle Date objects
   const serializedFrontmatter = JSON.parse(JSON.stringify(frontmatter))
 
   return {
     props: {
-      content: contentHtml,
+      content: transformedContent,
       frontmatter: serializedFrontmatter,
     },
   }
