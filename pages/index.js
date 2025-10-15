@@ -2,11 +2,18 @@ import { getMarkdownByPath } from '../lib/markdown'
 import Link from 'next/link'
 
 export default function Home({ content, frontmatter }) {
+  // Split content at "Browse Documentation" heading to separate hero from rest
+  const browseSectionIndex = content.indexOf('<h2 id="browse-documentation">Browse Documentation</h2>')
+  const heroContent = browseSectionIndex > 0 ? content.substring(0, browseSectionIndex) : content
+  const restContent = browseSectionIndex > 0 ? content.substring(browseSectionIndex) : ''
+
   return (
     <div>
-      <div dangerouslySetInnerHTML={{ __html: content }} />
+      {/* Hero section */}
+      <div dangerouslySetInnerHTML={{ __html: heroContent }} />
 
-      <div className="category-grid">
+      {/* Category cards - PRIMARY NAVIGATION */}
+      <div className="category-grid" style={{ marginTop: '2rem', marginBottom: '3rem' }}>
         <div className="category-card">
           <h3>📋 Agent Instructions</h3>
           <p>5 files - AI agent profiles and prompts</p>
@@ -43,6 +50,9 @@ export default function Home({ content, frontmatter }) {
           <Link href="/tools/README">Browse →</Link>
         </div>
       </div>
+
+      {/* Rest of content */}
+      <div dangerouslySetInnerHTML={{ __html: restContent }} />
     </div>
   )
 }
