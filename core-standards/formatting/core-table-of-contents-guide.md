@@ -15,7 +15,7 @@ classification: INTERNAL
 
 ## 1. Introduction
 
-A well-structured Table of Contents (TOC) is essential for navigation, content discovery, and establishing document hierarchy. This guide establishes comprehensive standards for implementing consistent, effective tables of contents across all documentation within the Unified Documentation System (UDS) framework.
+A well-structured Table of Contents (TOC) is essential for navigation, content discovery, and establishing document hierarchy. This guide establishes comprehensive standards for implementing consistent, effective tables of contents across all documentation within the Universal Documentation Standards (UDS) framework.
 
 ## 2. Core Principles
 

@@ -15,7 +15,7 @@ classification: INTERNAL
 
 ## 1. Introduction
 
-Effective links and cross-references are essential for creating navigable, interconnected documentation. This guide establishes comprehensive standards for implementing consistent, reliable, and user-friendly links across all documentation within the Unified Documentation System (UDS) framework.
+Effective links and cross-references are essential for creating navigable, interconnected documentation. This guide establishes comprehensive standards for implementing consistent, reliable, and user-friendly links across all documentation within the Universal Documentation Standards (UDS) framework.
 
 ## 2. Core Principles
 

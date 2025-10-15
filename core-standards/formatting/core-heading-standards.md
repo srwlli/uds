@@ -57,7 +57,7 @@ classification: INTERNAL
 
 ## 1. Introduction
 
-A well-structured heading hierarchy is essential for creating navigable, accessible, and user-friendly documentation. This guide establishes comprehensive standards for implementing consistent, effective heading structures across all documentation within the Unified Documentation System (UDS) framework.
+A well-structured heading hierarchy is essential for creating navigable, accessible, and user-friendly documentation. This guide establishes comprehensive standards for implementing consistent, effective heading structures across all documentation within the Universal Documentation Standards (UDS) framework.
 
 Proper heading hierarchy creates a logical structure that helps readers navigate, comprehend, and retain information more effectively. It also provides semantic structure for accessibility tools and enables automated functionality like table of contents generation and cross-referencing.
 

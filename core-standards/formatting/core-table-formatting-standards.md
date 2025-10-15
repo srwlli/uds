@@ -15,7 +15,7 @@ classification: INTERNAL
 
 ## 1. Introduction
 
-Tables are essential structural elements for presenting complex, structured data in a scannable, organized format. This guide establishes comprehensive standards for creating consistent, accessible, and effective tables across all documentation within the Unified Documentation System (UDS) framework.
+Tables are essential structural elements for presenting complex, structured data in a scannable, organized format. This guide establishes comprehensive standards for creating consistent, accessible, and effective tables across all documentation within the Universal Documentation Standards (UDS) framework.
 
 ## 2. Core Principles
 

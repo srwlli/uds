@@ -1,5 +1,5 @@
 ---
-title: Unified Development Standards (UDS) Framework Implementation - Project Summary
+title: Universal Documentation Standards (UDS) Framework Implementation - Project Summary
 version: 1.0.0
 date: 2025-10-14
 status: APPROVED
@@ -15,11 +15,11 @@ tags:
   - implementation
 ---
 
-# Unified Development Standards (UDS) Framework Implementation
+# Universal Documentation Standards (UDS) Framework Implementation
 ## Project Summary
 
 ### Project Overview
-This initiative aims to establish a comprehensive Unified Development Standards (UDS) framework to ensure consistent, high-quality software development practices across all systems and teams. The framework will serve as the single source of truth for development standards, providing clear guidance on all aspects of the software development lifecycle.
+This initiative aims to establish a comprehensive Universal Documentation Standards (UDS) framework to ensure consistent, high-quality technical documentation practices across all systems and teams. The framework will serve as the single source of truth for documentation standards, providing clear guidance on all aspects of technical documentation.
 
 ### Business Value
 - **Improved Quality**: Consistent standards reduce defects and technical debt

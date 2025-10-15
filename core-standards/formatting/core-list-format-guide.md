@@ -15,7 +15,7 @@ classification: INTERNAL
 
 ## 1. Introduction
 
-Lists are fundamental structural elements that organize information for improved readability, scanability, and comprehension. This document establishes comprehensive standards for implementing consistent, effective lists across all documentation within the Unified Documentation System (UDS) framework.
+Lists are fundamental structural elements that organize information for improved readability, scanability, and comprehension. This document establishes comprehensive standards for implementing consistent, effective lists across all documentation within the Universal Documentation Standards (UDS) framework.
 
 ## 2. List Types and Purposes
 

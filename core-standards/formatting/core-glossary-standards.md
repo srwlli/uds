@@ -61,7 +61,7 @@ classification: INTERNAL
 
 ## 1. Introduction
 
-A well-structured glossary is essential for ensuring consistent terminology use and understanding across technical documentation. This guide establishes comprehensive standards for creating, maintaining, and implementing glossaries within the Unified Documentation System (UDS) framework.
+A well-structured glossary is essential for ensuring consistent terminology use and understanding across technical documentation. This guide establishes comprehensive standards for creating, maintaining, and implementing glossaries within the Universal Documentation Standards (UDS) framework.
 
 Glossaries serve as the foundation for terminology consistency, enabling clearer communication between document creators and users. By standardizing glossary formats and content, organizations ensure accurate understanding of domain-specific terminology, reduce confusion, and improve overall documentation quality.
 

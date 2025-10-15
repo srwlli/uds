@@ -1,5 +1,5 @@
 ---
-title: Unified Documentation System (UDS) Enhancement Guide
+title: Universal Documentation Standards (UDS) Enhancement Guide
 version: 1.0.0
 date: 2025-03-22
 status: APPROVED
@@ -60,7 +60,7 @@ tags:
 
 ## 1. Introduction
 
-The Unified Documentation System (UDS) provides a comprehensive framework for creating consistent, high-quality documentation across an organization. This guide identifies critical enhancements needed to complete the UDS framework, based on analysis of existing documentation standards and identification of gaps.
+The Universal Documentation Standards (UDS) provides a comprehensive framework for creating consistent, high-quality documentation across an organization. This guide identifies critical enhancements needed to complete the UDS framework, based on analysis of existing documentation standards and identification of gaps.
 
 ## 2. Core Structure Enhancements
 

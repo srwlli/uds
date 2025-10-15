@@ -5,7 +5,7 @@
 ---
 
 ## Introduction
-This glossary provides standardized definitions for terminology used throughout the Unified Documentation System (UDS) framework. Consistent terminology enables clear communication, effective documentation, and seamless collaboration. Terms defined here represent the official vocabulary for all UDS‑compliant documentation.
+This glossary provides standardized definitions for terminology used throughout the Universal Documentation Standards (UDS) framework. Consistent terminology enables clear communication, effective documentation, and seamless collaboration. Terms defined here represent the official vocabulary for all UDS‑compliant documentation.
 
 Authors and reviewers should reference this glossary to ensure consistent usage across all documentation materials. Where appropriate, entries include concise usage guidance or examples.
 
